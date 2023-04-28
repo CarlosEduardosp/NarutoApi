@@ -1,7 +1,7 @@
-from src.infra.config import DBConnectionHandler, Base
-from src.infra.entities import users, Users
+from fastapi import FastAPI
+from rotas import router
 
 
-db_conn = DBConnectionHandler()
-engine = db_conn.get_engine()
-Base.metadata.create_all(engine)
+app = FastAPI()
+
+app.include_router(router=router)
