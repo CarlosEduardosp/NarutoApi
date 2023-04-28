@@ -1,7 +1,6 @@
-from fastapi import FastAPI
+from src.infra.config import DBConnectionHandler, Base
+from src.infra.entities import users, Users
 
-app = FastAPI()
-
-
-def index():
-    return "Olá Mundo"
+db_conn = DBConnectionHandler()
+engine = db_conn.get_engine()
+Base.metadata.create_all(engine)

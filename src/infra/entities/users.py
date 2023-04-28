@@ -10,8 +10,11 @@ class Users(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, unique=True)
-    password = Column(String, nullable=False)
-    id_pet = relationship("Pets")
+    resumo = Column(String, nullable=False)
+    nivel = Column(String, nullable=False)
+    vila = Column(String, nullable=False)
+    tecnicas = Column(String, nullable=False)
+    url = Column(String, nullable=False)
 
     def __rep__(self):
         return f"Usr [name={self.name}]"

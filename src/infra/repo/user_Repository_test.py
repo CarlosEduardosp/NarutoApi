@@ -1,27 +1,23 @@
-# pylint: disable=E1101
-
 from sqlalchemy import text
+from src.infra.config import DBConnectionHandler, Base
+from src.infra.entities import users, Users
+from src.infra.repo import UserRepository
 from faker import Faker
-from src.infra.config import DBConnectionHandler
-from .user_Repository import UserRepository
 
 faker = Faker()
-user_repostory = UserRepository()
 db_connection_handler = DBConnectionHandler()
 
 
-def test_insert_user():
-    """should insert User"""
-
+def test_insert():
     name = faker.name()
-    password = faker.word()
-    # engine = db_connection_handler.get_engine()
+    resumo = faker.word()
+    vila = faker.word()
+    ninja = faker.word()
+    tecnicas = faker.word()
+    url = faker.word()
 
-    # SQL comands
-    new_user = user_repostory.insert_user(name, password)
-
-    assert new_user.name == name
-    assert new_user.password == password
+    some = UserRepository()
+    result = some.insert_user(name, resumo, ninja, vila, tecnicas, url)
 
 
 def test_select_user():
@@ -33,8 +29,8 @@ def test_select_user():
         # select data in users
         query_user = connection.execute(text(f"SELECT * FROM users;"))
 
-    for us in query_user:
-        print(us.name, us.id)
+    for i in query_user:
+        print(i.name, i.tecnicas)
 
 
 def test_delete_user():
@@ -44,5 +40,5 @@ def test_delete_user():
 
     """ deleting data of select in users """
     with engine.connect() as connection:
-        connection.execute(text(f"DELETE FROM users WHERE id>{0} ;"))
+        connection.execute(text(f"DELETE FROM users WHERE id={1} ;"))
         connection.commit()
