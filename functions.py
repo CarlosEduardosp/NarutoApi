@@ -153,4 +153,4 @@ def find():
             id += 1
             contador += 1
 
-    return {"Todos os Personagens": list_nomes}
+    return list_nomes

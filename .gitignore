@@ -3,4 +3,4 @@ venv
 **__pycache__
 storage.db
 .pytest_cache
-main_test.py
+test_main.py
