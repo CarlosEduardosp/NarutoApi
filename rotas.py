@@ -1,7 +1,12 @@
 from fastapi import APIRouter
 from functions import find
 from src.infra.repo.user_Repository import UserRepository
+from src.infra.config import DBConnectionHandler, Base
 
+
+db_conn = DBConnectionHandler()
+engine = db_conn.get_engine()
+Base.metadata.create_all(engine)
 
 router = APIRouter()
 
