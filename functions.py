@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from src.infra.repo import UserRepository
+
+some = UserRepository()
 
 
 def get_soup():
@@ -154,3 +157,37 @@ def find():
             contador += 1
 
     return list_nomes
+
+
+def incluir_no_banco():
+    # realizando a raspagem de dados no site original, com as funções de functions.py
+    result = find()
+
+    # adicionando os dados da raspagem no banco de dados
+    for personagem in result:
+        if personagem["id"] != 28 and personagem["id"] < 32:
+            nivel = personagem["Detalhes"]["Nível Ninja"]
+            vila = personagem["Detalhes"]["Vila Ninja"]
+            tecnicas = personagem["Detalhes"]["Pincipais Técnicas"]
+
+            some.insert_user(
+                personagem["Nome"],
+                personagem["Resumo"],
+                nivel,
+                vila,
+                tecnicas,
+                personagem["Url_imagem"],
+            )
+        else:
+            nivel = "Não disponível !!"
+            vila = "Não disponível !!"
+            tecnicas = "Não disponível !!"
+
+            some.insert_user(
+                personagem["Nome"],
+                personagem["Resumo"],
+                nivel,
+                vila,
+                tecnicas,
+                personagem["Url_imagem"],
+            )

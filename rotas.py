@@ -1,15 +1,19 @@
 from fastapi import APIRouter
-from functions import find
+from functions import incluir_no_banco
 from src.infra.repo.user_Repository import UserRepository
 from src.infra.config import DBConnectionHandler, Base
 import random
+
+
+router = APIRouter()
 
 # criando o banco de dados.
 db_conn = DBConnectionHandler()
 engine = db_conn.get_engine()
 Base.metadata.create_all(engine)
 
-router = APIRouter()
+# incluindo dados do beautifulsoup no banco
+incluir_no_banco()
 
 """ instancia do repositório user"""
 some = UserRepository()
@@ -35,37 +39,8 @@ def todos_os_personagens():
     # condição para caso o banco esteja vazio
     else:
         try:
-            # realizando a raspagem de dados no site original, com as funções de functions.py
-            result = find()
-
-            # adicionando os dados da raspagem no banco de dados
-            for personagem in result:
-                if personagem["id"] != 28 and personagem["id"] < 32:
-                    nivel = personagem["Detalhes"]["Nível Ninja"]
-                    vila = personagem["Detalhes"]["Vila Ninja"]
-                    tecnicas = personagem["Detalhes"]["Pincipais Técnicas"]
-
-                    some.insert_user(
-                        personagem["Nome"],
-                        personagem["Resumo"],
-                        nivel,
-                        vila,
-                        tecnicas,
-                        personagem["Url_imagem"],
-                    )
-                else:
-                    nivel = "Não disponível !!"
-                    vila = "Não disponível !!"
-                    tecnicas = "Não disponível !!"
-
-                    some.insert_user(
-                        personagem["Nome"],
-                        personagem["Resumo"],
-                        nivel,
-                        vila,
-                        tecnicas,
-                        personagem["Url_imagem"],
-                    )
+            # incluindo dados no banco
+            incluir_no_banco()
 
             # retornando os dados salvos.
             query_user = some.select_user()
