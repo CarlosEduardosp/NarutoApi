@@ -20,7 +20,7 @@ def MontandoJson(dados):
         data = {
             'id': i[0],
             'name': i[1],
-            'resumo': i[3],
+            'resumo': i[2],
             'nivel': i[3],
             'vila': i[4],
             'tecnicas': i[5],
