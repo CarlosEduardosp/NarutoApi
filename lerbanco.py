@@ -24,7 +24,11 @@ def MontandoJson(dados):
             'nivel': i[3],
             'vila': i[4],
             'tecnicas': i[5],
-            'url': i[6]
+            'url': i[6],
+            'importante': False,
+            'lido': False,
+            'lixeira': False
+
         }
         lista.append(data)
     return lista
